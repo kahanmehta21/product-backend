@@ -8,7 +8,7 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
 const cors = require("cors");
-app.use(cors());
+
 
 const STATIC_USER = {
   username: "admin",
@@ -16,6 +16,7 @@ const STATIC_USER = {
 };
 
 const app = express();
+app.use(cors());
 const port = 3001;
 const JWT_SECRET = "mysecret";
 
