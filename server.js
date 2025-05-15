@@ -62,9 +62,12 @@ app.put("/products/:id", (req, res) => {
     });
   });
 
-app.get("/products", (req, res) => {
+  app.get("/products", (req, res) => {
     pool.query("SELECT * FROM Products", (err, results) => {
-      if (err) return res.status(500).json({ error: err.message });
+      if (err) {
+        console.error("Error fetching products:", err.message);
+        return res.status(500).json({ error: err.message });
+      }
       res.json(results);
     });
   });
