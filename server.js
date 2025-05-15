@@ -63,15 +63,13 @@ app.put("/products/:id", (req, res) => {
   });
 
   app.get("/products", (req, res) => {
-    const sql = "SELECT * FROM Products";
-    pool.query(sql, (err, results) => {
-      if (err) {
-        console.error("Error fetching products:", err);
-        return res.status(500).json({ error: "Failed to fetch products" });
-      }
-      res.json(results); // 👈 this must return an array
+    const sql = "SELECT product_id, prod_name, price, description, imageID AS image_url FROM Products";
+    pool.query(sql, (err, result) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json(result);
     });
   });
+  
   
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
