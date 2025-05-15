@@ -7,6 +7,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
+const cors = require("cors");
+app.use(cors());
 
 const STATIC_USER = {
   username: "admin",
@@ -58,9 +60,14 @@ app.put("/products/:id", (req, res) => {
       res.send("Product deleted");
     });
   });
-  
-  
 
+app.get("/products", (req, res) => {
+    pool.query("SELECT * FROM Products", (err, results) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json(results);
+    });
+  });
+  
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
